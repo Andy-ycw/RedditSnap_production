@@ -1,0 +1,9 @@
+
+**/.gitignore
+**/__pycache__
+**/*.env
+**/*.code-workspace
+**/*.venv
+**/*.sqlite3
+**/node_modules
+**/.next
