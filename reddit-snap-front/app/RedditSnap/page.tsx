@@ -1,7 +1,6 @@
 import LineChart from '@/app/ui/LineChart'
-import LineChart2 from '@/app/ui/LineChart_observable'
-import { fetchData } from './actions/dev_utility';
-import SearchForm from './ui/Search';
+import { fetchData } from '@/app/actions/dev_utility';
+import SearchForm from '@/app/ui/Search';
 
 
 export default async function Page(
@@ -17,12 +16,10 @@ export default async function Page(
   const data = await fetchData(query)
   return (
     <> 
-      <div className='flex-col justify-items-center mt-64'>
+      <div className='flex-col justify-items-center mt-32'>
+        <LineChart data={data}/> 
         
-        {/* <LineChart data={data}/> */}
-        <LineChart2 data={data}/> 
-        
-        <div className='flex justify-center'>
+        <div className='flex justify-center mt-10'>
         
           <SearchForm/>
 
