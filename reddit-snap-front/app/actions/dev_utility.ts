@@ -13,11 +13,12 @@ export async function fetchData(query: string) {
     await client.connect()
   
     try {
-      const res = await client
+      const res_data = await client
         .query(`select ups, observed_tstz from submission_time_series where id='${query}' ;`)
+      const res_title = await client
+        .query(`select title from submission where id='${query}' ;`)
       
-      console.log("hi", res.rows.length)
-      return JSON.stringify(res.rows)
+      return {data: JSON.stringify(res_data.rows), title: res_title.rows[0].title}
     } catch (err) {
       console.error("error", err);
     } finally {

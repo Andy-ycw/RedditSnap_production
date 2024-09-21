@@ -31,7 +31,10 @@ export default function D3Component ( json_obj ) {
     });
     
     return (    
-        <div id="#chart" className='flex justify-center' ref={containerRef} />
+        
+            
+            <div id="#chart" className='flex justify-center' ref={containerRef} />
+        
         
     );
 };
