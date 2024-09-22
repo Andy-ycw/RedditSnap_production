@@ -2,10 +2,11 @@ FROM node:20.15-alpine
 
 WORKDIR /app
 
-COPY package.json ./
-
-RUN npm i
-
+# COPY package.json ./
 COPY . .
+RUN npm i
+RUN npm run build
 
-CMD ["npm", "run", "dev"]
+
+
+CMD ["npm", "run", "start"]

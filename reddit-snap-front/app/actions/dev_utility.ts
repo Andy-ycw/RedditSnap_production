@@ -7,7 +7,7 @@ export async function fetchData(query: string) {
       user: process.env.pg_user,
       password: process.env.pg_password,
       host: process.env.pg_host,
-      port: process.env.pg_port,
+      port: Number(process.env.pg_port),
       database: process.env.pg_db
     })
     await client.connect()
