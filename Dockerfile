@@ -17,7 +17,7 @@ RUN apk add curl
 # RUN cd /RedditSnap
 
 # Arrange cron job
-RUN echo "*/1 * * * * time curl http://localhost:8000/etl/dev >> /RedditSnap/completion_time.log 2>>/RedditSnap/response_time.log" >> "/var/spool/cron/crontabs/root"
+RUN echo "*/10 * * * * time curl http://localhost:8000/etl/dev >> /RedditSnap/completion_time.log 2>>/RedditSnap/response_time.log" >> "/var/spool/cron/crontabs/root"
 RUN crond
 
 # Copy the rest of the application code
