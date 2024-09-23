@@ -14,7 +14,7 @@ export async function fetchById(query: string) {
         const res = await client.query(`
                 select id
                 from submission_time_series 
-                where observed_tstz > now() - interval '1.5 minute'
+                where observed_tstz > now() - interval '10.5 minute'
                 order by ups desc limit 1;
             `);
         query = res.rows[0].id;
