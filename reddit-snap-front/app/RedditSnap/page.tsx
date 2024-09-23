@@ -24,8 +24,9 @@ export default async function Page(
     <> 
       <div className='flex-col justify-items-center mt-8'>
         <div className='flex justify-center mb-10'>
-          <div className='flex justify-center w-8/12'>
-            <h1>/r/WorldNews Post: <strong>{title}</strong></h1>
+          <div className='w-8/12'>
+            <h1>/r/WorldNews Post: </h1>
+            <h1><strong>{title}</strong></h1>
           </div>
           
         </div>

@@ -50,7 +50,7 @@ export async function fetchById(query: string) {
     
         try {
             const res = await client.query(`
-                select title, created_utc 
+                select id, title, created_utc 
                 from submission 
                 where '${query}' <% title
                 order by created_utc desc limit 5;
@@ -66,3 +66,8 @@ export async function fetchById(query: string) {
     
   
   }
+
+//   select title, word_similarity('ukr', title) as sml
+// 	from submission
+// 	where 'ukr' <% title
+// 	order by sml desc;
