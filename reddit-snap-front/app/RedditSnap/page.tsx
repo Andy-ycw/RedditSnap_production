@@ -1,6 +1,6 @@
 import LineChart from '@/app/ui/LineChart'
-import { fetchData } from '@/app/actions/dev_utility';
-import SearchForm from '@/app/ui/Search';
+import { fetchById } from '@/app/lib/data';
+import { SearchIdForm, SearchTitleForm } from '@/app/ui/Search';
 
 
 export default async function Page(
@@ -8,17 +8,18 @@ export default async function Page(
   {
     searchParams?: {
       submission_id?: string;
+      submission_title?: string;
     }
   }
 ) {
-  const query = searchParams?.submission_id || '1fgua0x' ;
+  const query = searchParams?.submission_id || '' ;
   console.log('query', query);
-  const res = await fetchData(query);
+  const res = await fetchById(query);
   const data = res?.data;
   const title = res?.title;
   return (
     <> 
-      <div className='flex-col justify-items-center mt-32'>
+      <div className='flex-col justify-items-center mt-8'>
         <div className='flex justify-center mb-10'>
           <div className='flex justify-center w-8/12'>
             <h1>/r/WorldNews Post: <strong>{title}</strong></h1>
@@ -27,7 +28,10 @@ export default async function Page(
         </div>
         <LineChart data={data}/> 
         <div className='flex justify-center mt-10'>
-          <SearchForm/>
+          <SearchIdForm/>
+        </div>
+        <div className='flex justify-center mt-5'>
+          <SearchTitleForm/>
         </div>
       </div>
     
