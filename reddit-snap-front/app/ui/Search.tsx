@@ -25,9 +25,9 @@ export function SearchTitleForm() {
         const params = new URLSearchParams(searchParams);
         params.set('page', '1');
         if (term) {
-        params.set('title', term);
+        params.set('title_query', term);
         } else {
-        params.delete('title');
+        params.delete('title_query');
         }
         console.log(`${pathname}?${params.toString()}`);
         replace(`${pathname}?${params.toString()}`);

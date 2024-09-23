@@ -1,6 +1,7 @@
-import LineChart from '@/app/ui/LineChart'
+import LineChart from '@/app/ui/lineChart';
 import { fetchById } from '@/app/lib/data';
-import { SearchIdForm, SearchTitleForm } from '@/app/ui/Search';
+import { SearchIdForm, SearchTitleForm } from '@/app/ui/search';
+import Table from '@/app/ui/table';
 
 
 export default async function Page(
@@ -10,7 +11,7 @@ export default async function Page(
       submission_id?: string;
       submission_title?: string;
       page?: number;
-      title?: string;
+      title_query?: string;
     }
   }
 ) {
@@ -34,6 +35,9 @@ export default async function Page(
         </div>
         <div className='flex justify-center mt-5'>
           <SearchTitleForm/>
+        </div>
+        <div className='flex justify-center mt-5'>
+          <Table query={searchParams?.title_query}/>
         </div>
       </div>
     

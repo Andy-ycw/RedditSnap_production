@@ -34,3 +34,35 @@ export async function fetchById(query: string) {
     }
   
   }
+
+  export async function fetchFuzzyTitle(query: string) {
+    if (query.length > 0) {
+        const { Client } = pg
+        const client = new Client({
+        user: process.env.pg_user,
+        password: process.env.pg_password,
+        host: process.env.pg_host,
+        port: Number(process.env.pg_port),
+        database: process.env.pg_db
+        })
+        await client.connect()
+        if (query.length == 0) return
+    
+        try {
+            const res = await client.query(`
+                select title, created_utc 
+                from submission 
+                where '${query}' <% title
+                order by created_utc desc limit 5;
+            `);
+        
+            return res.rows
+        } catch (err) {
+        console.error("error", err);
+        } finally {
+        await client.end()
+        }
+    }
+    
+  
+  }

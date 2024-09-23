@@ -11,7 +11,6 @@ export default function LineChart ( json_obj ) {
         d.ups = +d.ups; // Convert value to a number
     });
     
-    console.log('containerRef.current init', containerRef.current)
     useEffect(() => {
         const chart_dom = containerRef.current;
         const plot = Plot.plot({
