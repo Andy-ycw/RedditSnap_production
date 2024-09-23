@@ -9,14 +9,16 @@ export default async function Page(
     searchParams?: {
       submission_id?: string;
       submission_title?: string;
+      page?: number;
+      title?: string;
     }
   }
 ) {
   const query = searchParams?.submission_id || '' ;
-  console.log('query', query);
   const res = await fetchById(query);
   const data = res?.data;
   const title = res?.title;
+
   return (
     <> 
       <div className='flex-col justify-items-center mt-8'>
