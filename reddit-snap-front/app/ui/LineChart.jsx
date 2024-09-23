@@ -3,16 +3,16 @@ import {useEffect, useRef} from "react";
 import * as d3 from 'd3';
 import * as Plot from '@observablehq/plot' ;
 
-export default function D3Component ( json_obj ) {
-    const containerRef = useRef();
+export default function LineChart ( json_obj ) {
+    const containerRef = useRef(0);
     const data = JSON.parse(json_obj.data);
     data.forEach(d => {
         d.time = d3.isoParse(d.observed_tstz);
         d.ups = +d.ups; // Convert value to a number
     });
-
+    
     useEffect(() => {
-        d3.select("#chart").select("svg").remove();
+        const chart_dom = containerRef.current;
         const plot = Plot.plot({
             grid: true,
             x: {type: `time`, tickFormat: `%I %p\n%b%e`},   
@@ -27,15 +27,14 @@ export default function D3Component ( json_obj ) {
                 })
             ]
         });
-        containerRef.current.append(plot);
+
+        chart_dom.append(plot);
+        return () => {chart_dom.innerHTML = ""}
+        
     });
     
     return (    
-        
-            
-            <div id="#chart" className='flex justify-center' ref={containerRef} />
-        
-        
+        <div id="#chart" className='flex justify-center' ref={containerRef} />
     );
 };
 
