@@ -25,9 +25,11 @@ export default async function Page(
     <> 
       <div className='flex-col justify-items-center mt-8'>
         <div className='flex justify-center mb-10'>
-          <div className='w-8/12'>
-            <h1>/r/WorldNews Post: </h1>
-            <h1><strong>{title}</strong></h1>
+          <div className='w-8/12 flex justify-center'>
+            <div>
+              <h1>/r/WorldNews Post: </h1>
+              <h1><strong>{title}</strong></h1>
+            </div>
             <p>{match ? null : 'Unmatched id; display default.'}</p>
           </div>
           

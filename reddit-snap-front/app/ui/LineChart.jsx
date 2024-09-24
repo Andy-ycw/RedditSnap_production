@@ -14,6 +14,8 @@ export default function LineChart ( json_obj ) {
     useEffect(() => {
         const chart_dom = containerRef.current;
         const plot = Plot.plot({
+            marginLeft:60,
+            marginRight:60,
             grid: true,
             x: {type: `time`, tickFormat: `%I %p\n%b%e`},   
             marks: [
