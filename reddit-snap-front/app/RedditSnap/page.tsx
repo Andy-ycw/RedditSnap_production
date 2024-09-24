@@ -19,6 +19,7 @@ export default async function Page(
   const res = await fetchById(query);
   const data = res?.data;
   const title = res?.title;
+  const match = res?.match;
 
   return (
     <> 
@@ -27,6 +28,7 @@ export default async function Page(
           <div className='w-8/12'>
             <h1>/r/WorldNews Post: </h1>
             <h1><strong>{title}</strong></h1>
+            <p>{match ? null : 'Unmatched id; display default.'}</p>
           </div>
           
         </div>
