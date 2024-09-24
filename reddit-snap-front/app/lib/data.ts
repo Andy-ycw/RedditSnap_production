@@ -1,6 +1,8 @@
 import pg from 'pg'
 
 export async function fetchById(query: string) {
+    query = query.replace(/[^a-zA-Z0-9 ]/g, "");
+    console.log("clean query", query);
     const { Client } = pg
     const client = new Client({
       user: process.env.pg_user,
@@ -36,6 +38,7 @@ export async function fetchById(query: string) {
   }
 
   export async function fetchFuzzyTitle(query: string) {
+    query = query.replace(/[^a-zA-Z0-9 ]/g, "");
     if (query.length > 0) {
         const { Client } = pg
         const client = new Client({
