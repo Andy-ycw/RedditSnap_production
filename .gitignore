@@ -46,3 +46,6 @@ __pycache__
 *.env
 *.code-workspace
 .project
+
+# Local database backup
+backup.sql
