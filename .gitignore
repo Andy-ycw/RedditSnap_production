@@ -48,4 +48,4 @@ __pycache__
 .project
 
 # Local database backup
-backup.sql
+backup.*

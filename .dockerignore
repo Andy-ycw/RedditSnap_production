@@ -5,3 +5,5 @@
 **/*.code-workspace
 **/*.venv
 **/*.sqlite3
+**/*.secrets
+**/postgres_admin
