@@ -115,7 +115,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'etl.middleware.postgresql.SimpleMiddleware',
+    'etl.middleware.postgresql.BlockRepeatSubmissionMiddleware',
 ]
 
 ROOT_URLCONF = 'SnapReddit_dev.urls'

@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, create_engine, Numeric, Boolean, ForeignKey, DateTime, select, Index, text
 from sqlalchemy.orm import sessionmaker, declarative_base
+from psycopg2 import OperationalError as psycopg2OperationalError
 from dotenv import load_dotenv
 import os
 import pandas as pd
@@ -55,6 +56,15 @@ def get_pg_credentials():
     port = os.environ.get('pg_port')  # Default PostgreSQL port
     return user, password, host, port
 
+def get_pg_rds_credentials():
+    load_dotenv()
+    user = os.environ.get('pg_rds_user')
+    password = os.environ.get('pg_rds_password')
+    host = os.environ.get('pg_rds_host')  # or the IP address of your PostgreSQL server
+    port = os.environ.get('pg_rds_port')  # Default PostgreSQL port
+    return user, password, host, port
+
+
 def init_tables(db_name):
     # Table initialisation
     user, password, host, port = get_pg_credentials()
@@ -89,19 +99,37 @@ def reset_db(db_name):
     return "Successful"
 
 def bulk_load_df(df_list: list[pd.DataFrame], data_model_list: List[Base], db_name):     
+    # It is designed that the data should be loaded to a local db and a remote db with identical data.
+    # So the database name and data models should be the same. 
+
     user, password, host, port = get_pg_credentials()
     engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{db_name}')
+    
+    user_rds, password_rds, host_rds, port_rds = get_pg_rds_credentials()
+    engine_rds = create_engine(f'postgresql://{user_rds}:{password_rds}@{host_rds}:{port_rds}/{db_name}')
+
     for i in range(len(df_list)):
         with engine.connect() as conn:
             df = df_list[i]
             data_model = data_model_list[i]
             df.to_sql(data_model.__tablename__, conn, if_exists="append", index=False)
-    
+        
+        with engine_rds.connect() as conn:
+            df = df_list[i]
+            data_model = data_model_list[i]
+            df.to_sql(data_model.__tablename__, conn, if_exists="append", index=False)
 
 # Get the list of submission id from db
-def get_sub_set(db_name):
+def get_sub_set():
     user, password, host, port = get_pg_credentials()
+    logging.debug(host)
+    load_dotenv()
+    db_name = os.environ.get('pg_db')
+    
     engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{db_name}')
+    # For development, use localhost below but not the host in .env as above
+    # engine = create_engine(f'postgresql://{user}:{password}@localhost:{port}/{db_name}')
+
     with engine.connect() as connection:
         query = select(Submission.id)
         result_tuple_list = connection.execute(query).fetchall()

@@ -13,9 +13,9 @@ def index(request):
     return HttpResponse(f"Hello, world. You're at the etl index.\n \
         Your request is {type(request)}")
 
-def dev(request):
-    limit = None
-    reset = False
+def snap_shot(request):
+    limit = None # 
+    reset = False # Only set to true for development purposes, #NOTE:XXX: This would delete the data in the local environment!!! 
     subreddit = "worldnews"
     reddit = connect_reddit_endpoint()
     etl(reddit, limit, subreddit, reset_dst_db = reset, submissions_in_pg=request.submissions_in_pg)
