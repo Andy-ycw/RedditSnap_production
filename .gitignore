@@ -43,7 +43,7 @@ __pycache__
 
 # Environment
 .venv
-*.env
+*.env*
 *.code-workspace
 .project
 
