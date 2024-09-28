@@ -7,6 +7,8 @@ const DEFAULT_SUBMISSION_QUERY = `
                 order by ups desc limit 1;
             `;
 
+// TODO: Write data class or use ORM for validating retrieved data.
+
 export async function fetchById(query: string) {
     query = query.replace(/[^a-zA-Z0-9 ]/g, "");
     console.log("clean query", query);
