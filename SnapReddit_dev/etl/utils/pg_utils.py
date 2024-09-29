@@ -114,10 +114,10 @@ def bulk_load_df(df_list: list[pd.DataFrame], data_model_list: List[Base], db_na
             data_model = data_model_list[i]
             df.to_sql(data_model.__tablename__, conn, if_exists="append", index=False)
         
-        # with engine_rds.connect() as conn:
-        #     df = df_list[i]
-        #     data_model = data_model_list[i]
-        #     df.to_sql(data_model.__tablename__, conn, if_exists="append", index=False)
+        with engine_rds.connect() as conn:
+            df = df_list[i]
+            data_model = data_model_list[i]
+            df.to_sql(data_model.__tablename__, conn, if_exists="append", index=False)
 
 # Get the list of submission id from db
 def get_sub_set():
