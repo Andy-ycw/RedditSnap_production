@@ -16,7 +16,7 @@ export async function fetchById(query: string) {
     const client = new Client({
       user: process.env.pg_user,
       password: process.env.pg_password,
-      host: process.env.pg_host,
+      host: process.env.NODE_ENV === 'development' ? 'localhost' : process.env.pg_host,
       port: Number(process.env.pg_port),
       database: process.env.pg_db
     })
@@ -65,7 +65,8 @@ export async function fetchFuzzyTitle(query: string) {
       })
       await client.connect()
       if (query.length == 0) return
-  
+      
+      // TODO: Should make posts with higher upvotes appear first
       try {
           const res = await client.query(`
               select id, title, created_utc 
