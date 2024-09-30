@@ -108,16 +108,27 @@ def bulk_load_df(df_list: list[pd.DataFrame], data_model_list: List[Base], db_na
     user_rds, password_rds, host_rds, port_rds = get_pg_rds_credentials()
     engine_rds = create_engine(f'postgresql://{user_rds}:{password_rds}@{host_rds}:{port_rds}/{db_name}')
 
+    load_remote = True
+    if not load_remote:
+        logging.info("Recurring reminders that the remote RDS db is not working.")
+
     for i in range(len(df_list)):
         with engine.connect() as conn:
             df = df_list[i]
             data_model = data_model_list[i]
             df.to_sql(data_model.__tablename__, conn, if_exists="append", index=False)
-        
-        with engine_rds.connect() as conn:
-            df = df_list[i]
-            data_model = data_model_list[i]
-            df.to_sql(data_model.__tablename__, conn, if_exists="append", index=False)
+
+        if load_remote:
+            try:
+                with engine_rds.connect() as conn:
+                    df = df_list[i]
+                    data_model = data_model_list[i]
+                    df.to_sql(data_model.__tablename__, conn, if_exists="append", index=False)
+            except Exception as e:
+                load_remote = False
+                logging.info("Connection error to the remote RDS. Load data to the local database only. Check below for the error details.")
+                logging.info(e)
+                continue
 
 # Get the list of submission id from db
 def get_sub_set():
