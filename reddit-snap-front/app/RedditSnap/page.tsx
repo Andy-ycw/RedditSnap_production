@@ -30,7 +30,6 @@ export default async function Page(
               <h1>/r/WorldNews Post: </h1>
               <h1><strong>{title}</strong></h1>
               <p><small>{match ? null : 'Unmatched id; display default.'}</small></p>
-              <p>{process.env.NODE_ENV === 'development' ? 'dev' : null}</p>
             </div>
           </div>
           
