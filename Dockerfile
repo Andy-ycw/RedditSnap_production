@@ -15,6 +15,7 @@ COPY . .
 RUN pip install -r requirements.txt
 RUN apk add curl
 RUN apk add openssh
+RUN echo -e "Host *\n\tServerAliveInterval 60\n\tServerAliveCountMax 3" > config
 
 # Arrange cron job
 RUN echo "*/10 * * * * time curl http://localhost:8000/etl/snap_shot >> /RedditSnap/completion_time.log 2>>/RedditSnap/response_time.log" >> "/var/spool/cron/crontabs/root"
