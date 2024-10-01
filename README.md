@@ -8,15 +8,15 @@ Welcome to the GitHub repo of <a href="www.andycw.com/RedditSnap">RedditSnap</a>
         <li>Fuzzy search of post by post title.</li>
     </ol>
 
-The project is in the early stage so only the trends of Hot posts in the WorldNews subreddit are available. More data will be availble and more features will be implemented in the future. For example, the trend of comment numbers will be made available, and it would be interesting to use NLP for investigating comment topics over different time windows. Nonetheless, improvements on technical aspects will also be made incrementally (i.e. search result pagination).
+The project is in the early stage so only the trends of Hot posts in the WorldNews subreddit are available. More data will be availble and more features will be implemented in the future. For example, the trend of comment numbers will be made available, and it would be interesting to use NLP for investigating comment topics over different time windows. Nonetheless, improvements on technical aspects will also be made incrementally (i.e. code refactoring, search result pagination).
 
 <h1>Application architecture</h1>
 
-- Local snapshot service: Django (local Docker deployment)
-- Database: PostgreSQL (managed by AWS RDS)
-- Web server: Next.js (Docker deployment in EC2) + Nginx (configured manually in EC2)
+- Local snapshot service: Django (local Docker deployment, code in SnapReddit_dev)
+- Database: PostgreSQL (managed by AWS RDS, some queries in postgres_admin)
+- Web server: Next.js (Docker deployment in EC2, code in reddit-snap-front) + Nginx (configured manually in EC2)
  
-The main compoenents of RedditSnap is outlined above. 
+The main compoenents of RedditSnap is outlined above. Note that scripts in postgres_admin are for exploring query efficiency.  
 
 The local snapshot service is run locally on my device with Docker. A Cron job is set up inside the container environment to make regular requests to the Django service. Each time the service receives a request, it extracts Hot post data from the Reddit API, transforms them into Pandas DataFrame, and bulk loads them into the database. 
 

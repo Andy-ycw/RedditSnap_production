@@ -26,4 +26,4 @@ RUN crond
 CMD ssh -o StrictHostKeyChecking=no -f -N -L 5431:${rds_domain}:5432 -i ${key_path} ec2-user@${aws_pub_ip}; \
     autossh -M 0 -f -N -L 5431:${rds_domain}:5432 -i ${key_path} ec2-user@${aws_pub_ip}; \
     crond; \
-    python ./SnapReddit_dev/manage.py runserver
+    python ./manage.py runserver
