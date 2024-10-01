@@ -39,4 +39,4 @@ Next.js is considered suitable for small projects like RedditSnap because both t
 
 <br>
 <h1>Contact</h1>
-I would appreciate any questions, suggestions, and feedback to help me get better in web development. Please feel free to <a href="andyyu.general@gmail.com">email</a> me. 
+I would appreciate any questions, suggestions, and feedback to help me get better at web development. Please feel free to <a href="andyyu.general@gmail.com">email</a> me. 
