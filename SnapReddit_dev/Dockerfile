@@ -15,15 +15,20 @@ COPY . .
 RUN pip install -r requirements.txt
 RUN apk add curl
 RUN apk add openssh
-RUN mkdir ~/.ssh
-RUN echo -e "Host *\n\tServerAliveInterval 60\n\tServerAliveCountMax 3" > ~/.ssh/config
 RUN apk add autossh
+RUN mkdir ~/.ssh
 
-# Arrange cron job
+# Arrange cron job for regular snapshot
 RUN echo "*/10 * * * * time curl http://localhost:8000/etl/snap_shot >> /RedditSnap/completion_time.log 2>>/RedditSnap/response_time.log" >> "/var/spool/cron/crontabs/root"
 RUN crond
 
-CMD ssh -o StrictHostKeyChecking=no -f -N -L 5431:${rds_domain}:5432 -i ${key_path} ec2-user@${aws_pub_ip}; \
-    autossh -M 0 -f -N -L 5431:${rds_domain}:5432 -i ${key_path} ec2-user@${aws_pub_ip}; \
+CMD ssh-keyscan -H ${aws_pub_ip} >> ~/.ssh/known_hosts; \
+    autossh -M 0 -f -N -L 5431:${rds_domain}:5432 -i ${HOMEDIR}/${key_path} ec2-user@${aws_pub_ip}; \
     crond; \
     python ./manage.py runserver
+
+# Previous version
+# CMD ssh -o StrictHostKeyChecking=no -f -N -L 5431:${rds_domain}:5432 -i ${key_path} ec2-user@${aws_pub_ip}; \
+#     autossh -M 0 -f -N -L 5431:${rds_domain}:5432 -i ${key_path} ec2-user@${aws_pub_ip}; \
+#     crond; \
+#     python ./manage.py runserver
